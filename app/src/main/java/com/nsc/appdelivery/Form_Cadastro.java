@@ -63,6 +63,8 @@ public class Form_Cadastro extends AppCompatActivity {
                                 }
                             });
                          snackbar.show();
+                } else{
+                    txtMensagemErro.setText("não foi possível o cadastro");
                 }
             }
         });
