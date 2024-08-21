@@ -14,8 +14,13 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,7 +69,21 @@ public class Form_Cadastro extends AppCompatActivity {
                             });
                          snackbar.show();
                 } else{
-                    txtMensagemErro.setText("não foi possível o cadastro");
+                    String erro;
+                    try {
+                        throw task.getException();
+                    }catch (FirebaseAuthWeakPasswordException e) {
+                        erro = "coloque uma senha com no mínimo 6 caracteres";
+                    }catch (FirebaseAuthInvalidCredentialsException e) {
+                        erro = "e-mail inválido";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        erro = "Esta conta já foi cadastrada";
+                    }catch (FirebaseNetworkException e) {
+                        erro = "Sem conexão com a internet";
+                    }catch (Exception e) {
+                        erro = "erro ao cadastrar usuário";
+                    }
+                    txtMensagemErro.setText(erro);
                 }
             }
         });
