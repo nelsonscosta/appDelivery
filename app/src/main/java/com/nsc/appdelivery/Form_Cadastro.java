@@ -33,10 +33,14 @@ import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -47,8 +51,9 @@ public class Form_Cadastro extends AppCompatActivity {
     private Button bt_selecionarUsuario, btCadastrar;
     private EditText edit_nome, edit_email, edit_senha;
     private TextView txtMensagemErro;
-
+    private String usuarioID;
     private Uri mSelecionarUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +160,31 @@ public class Form_Cadastro extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
 
-                                Log.i("url_img",uri.toString());
+                                String foto = uri.toString();
+
+                                //iniciar o bd do Firestone
+                                String nome = edit_nome.getText().toString();
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                Map<String, Object> usuarios = new HashMap<>();
+                                usuarios.put("nome",nome);
+                                usuarios.put("foto",foto);
+
+                                usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                DocumentReference documentReference = db.collection("usuarios").document(usuarioID);
+                                documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                            Log.i("db", "Sucesso ao salvar os dados");
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("db_error", "Erro ao salvar os dados"+e.toString());
+                                    }
+                                });
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
