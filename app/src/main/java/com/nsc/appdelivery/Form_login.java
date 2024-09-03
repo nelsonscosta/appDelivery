@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Form_login extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class Form_login extends AppCompatActivity {
 
         bt_entrar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+             public void onClick(View v) {
 
                 String email = edit_email.getText().toString();
                 String senha = edit_senha.getText().toString();
@@ -59,9 +60,11 @@ public class Form_login extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public  void AutenticarUsuario() {
+
         String email = edit_email.getText().toString();
         String senha = edit_senha.getText().toString();
 
@@ -82,10 +85,8 @@ public class Form_login extends AppCompatActivity {
 
                     try {
                         throw task.getException();
-                    }catch (FirebaseAuthWeakPasswordException e) {
-                         erro = "senha inválida";
                     } catch (Exception e) {
-                        erro = "Erro ao cadastrar usuário!";
+                        erro = "Erro ao logar usuário!";
                     }
                     txt_mensagemErro.setText(erro);
                 }
@@ -93,11 +94,23 @@ public class Form_login extends AppCompatActivity {
         });
     }
 
+
     public void IniciarTelaProdutos(){
+
         Intent intent = new Intent(Form_login.this, Lista_Produtos.class);
         startActivity(intent);
         finish();
     }
+/*    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(usuarioAtual != null) {
+                 IniciarTelaProdutos();   }
+    }
+*/
     public void iniciarComponentes(){
         txt_criar_comta = findViewById(R.id.txt_criar_conta);
         edit_email = findViewById(R.id.edit_email);

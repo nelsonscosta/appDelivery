@@ -48,11 +48,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Form_Cadastro extends AppCompatActivity {
 
     private CircleImageView fotoUsuario;
-    private Button bt_selecionarUsuario, btCadastrar;
+    private Button bt_selecionarUsuario, btCadastrar, btSlecionarFoto;
     private EditText edit_nome, edit_email, edit_senha;
     private TextView txtMensagemErro;
     private String usuarioID;
     private Uri mSelecionarUri;
+
+    private boolean clicked = false;
 
 
     @Override
@@ -65,6 +67,16 @@ public class Form_Cadastro extends AppCompatActivity {
         edit_email.addTextChangedListener(cadastroTextWhacher);
         edit_senha.addTextChangedListener(cadastroTextWhacher);
 
+        btSlecionarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicked = true;
+                if (clicked == false) {
+                    txtMensagemErro.setText("foto não selecionada");
+                }
+            }
+        });
+
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,10 +84,14 @@ public class Form_Cadastro extends AppCompatActivity {
                 cadastrarUsuario(v);
             }
         });
+
+
+
         bt_selecionarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelecionarFotoGaleria();
+
+                    SelecionarFotoGaleria();
             }
         });
     }
@@ -162,6 +178,7 @@ public class Form_Cadastro extends AppCompatActivity {
 
                                 String foto = uri.toString();
 
+
                                 //iniciar o bd do Firestone
                                 String nome = edit_nome.getText().toString();
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -209,6 +226,7 @@ public class Form_Cadastro extends AppCompatActivity {
         edit_senha = findViewById(R.id.edit_senha);
         txtMensagemErro = findViewById(R.id.txt_mensagemErro);
         btCadastrar = findViewById(R.id.bt_cadastrar);
+        btSlecionarFoto = findViewById(R.id.bt_selecionarFoto);
    }
 
 
@@ -225,13 +243,18 @@ public class Form_Cadastro extends AppCompatActivity {
             String email = edit_email.getText().toString();
             String senha = edit_senha.getText().toString();
 
-            if (!nome.isEmpty() && !email.isEmpty() && !senha.isEmpty() ){
+
+                if (!nome.isEmpty() && !email.isEmpty() && !senha.isEmpty()){
                     btCadastrar.setEnabled(true);
                     btCadastrar.setBackgroundColor(getResources().getColor(R.color.dark_red));
-            } else {
-                btCadastrar.setEnabled(false);
-                btCadastrar.setBackgroundColor(getResources().getColor(R.color.gray));
-            }
+                } else {
+                    btCadastrar.setEnabled(false);
+                    btCadastrar.setBackgroundColor(getResources().getColor(R.color.gray));
+                }
+
+
+
+
 
         }
 
