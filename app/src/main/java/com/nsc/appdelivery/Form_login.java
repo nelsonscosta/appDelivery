@@ -101,7 +101,7 @@ public class Form_login extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-/*    @Override
+   @Override
     protected void onStart() {
         super.onStart();
 
@@ -110,7 +110,7 @@ public class Form_login extends AppCompatActivity {
         if(usuarioAtual != null) {
                  IniciarTelaProdutos();   }
     }
-*/
+
     public void iniciarComponentes(){
         txt_criar_comta = findViewById(R.id.txt_criar_conta);
         edit_email = findViewById(R.id.edit_email);
