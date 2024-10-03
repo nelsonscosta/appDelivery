@@ -18,11 +18,14 @@ public class Perfil_Ususario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_ususario);
+
+        iniciarComponentes();
     }
 
-    public void inicarComponentes() {
+    public void iniciarComponentes() {
         foto_perfil_usuario = findViewById(R.id.foto_perfil_usuario);
         nome_perfil_usuario = findViewById(R.id.nome_perfil_usuario);
         email_perfil_usuario = findViewById(R.id.email_perfii_usuario);
+        bt_editarPerfil = findViewById(R.id.bt_editarPerfil);
     }
 }
