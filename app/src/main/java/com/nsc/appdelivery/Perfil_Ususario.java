@@ -45,6 +45,8 @@ public class Perfil_Ususario extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 if(documentSnapshot != null){
                     Glide.with(getApplicationContext()).load(documentSnapshot.getString("foto")).into(foto_perfil_usuario);
+                    nome_perfil_usuario.setText(documentSnapshot.getString("nome"));
+                    email_perfil_usuario.setText(email);
                 }
             }
         });
