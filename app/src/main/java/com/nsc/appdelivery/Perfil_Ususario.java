@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Perfil_Ususario extends AppCompatActivity {
@@ -13,6 +16,7 @@ public class Perfil_Ususario extends AppCompatActivity {
     private CircleImageView foto_perfil_usuario;
     private TextView nome_perfil_usuario, email_perfil_usuario;
     private Button bt_editarPerfil;
+    private String usuarioID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,14 @@ public class Perfil_Ususario extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_ususario);
 
         iniciarComponentes();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        
     }
 
     public void iniciarComponentes() {
