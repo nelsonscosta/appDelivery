@@ -3,7 +3,9 @@ package com.nsc.appdelivery;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,6 +32,14 @@ public class Perfil_Ususario extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_ususario);
 
         iniciarComponentes();
+
+        bt_editarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Perfil_Ususario.this, Editar_Perfil.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
