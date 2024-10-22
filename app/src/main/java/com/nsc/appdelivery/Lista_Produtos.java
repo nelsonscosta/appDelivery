@@ -2,6 +2,7 @@ package com.nsc.appdelivery;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +14,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Lista_Produtos extends AppCompatActivity {
 
+    private RecyclerView recyclerView_produto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_produtos);
+
+        recyclerView_produto = findViewById(R.id.recyclerView_produtos);
     }
 
     @Override
